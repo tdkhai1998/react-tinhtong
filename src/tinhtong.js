@@ -2,41 +2,44 @@ import React from 'react';
 class MyForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {value: ''};
+      this.state = {
+        result: 0,
+        num1: 0,
+        num2: 0
+      };
+      this.num1Change = this.num1Change.bind(this);
+      this.num2Change = this.num2Change.bind(this);
+    }
+  
+    num1Change(event) {
+      const r=Number(event.target.value)+Number(this.state.num2);
+      this.setState({num1: event.target.value, result: r});
+    }
+  
+    num2Change(event) {
+      const r=Number(this.state.num1)+Number(event.target.value);
+      this.setState({num2: event.target.value, result: r});
+    }
 
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-    }
-  
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
-    }
-  
     render() {
       return (
         <div className="row">
             <div className="col-xl-4"></div>
             <div className="col-xl-4">
-                <form>
+                <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <label>Số thứ nhất
+                          <input type="number" className="form-control" onChange={this.num1Change} placeholder="0"/>
+                        </label>
                     </div>
                     <div className="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                        <label>Số thứ hai
+                          <input type="number" className="form-control" onChange={this.num2Change}  placeholder="0"/>
+                        </label>
                     </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                        <label className="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div className="form-group ">
+                        <h3>Tổng hai số là: {this.state.result}</h3>
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
